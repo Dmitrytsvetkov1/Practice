@@ -156,7 +156,16 @@ class addWindow extends JFrame {
                 System.out.println("Рыночная цена: " + marketPrice);
                 System.out.println("Закупочная цена: " + purchasePrice);
 
-                String query = "INSERT INTO";
+                String query = "INSERT INTO Equipment (Category, Line, Title, SerialNumber, `Description`, MarketPrice, PurchasePrice)" +
+                        "VALUES (" +
+                        category + ", " +
+                        brand + ", " +
+                        name + ", " +
+                        serialNumber + ", " +
+                        description + ", " +
+                        marketPrice + ", " +
+                        purchasePrice +
+                        ")";
 
 
 
@@ -168,12 +177,8 @@ class addWindow extends JFrame {
                     stmt = con.createStatement();
 
                     // executing SELECT query
-                    rs = stmt.executeQuery(query);
+                    stmt.executeQuery(query);
 
-                    while (rs.next()) {
-                        int count = rs.getInt(1);
-                        System.out.println("Total number of books in the table : " + count);
-                    }
 
                 } catch (SQLException sqlEx) {
                     sqlEx.printStackTrace();
