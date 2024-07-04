@@ -76,7 +76,7 @@ class addWindow extends JFrame {
 
     private static final String url = "jdbc:mysql://localhost:3306/sys";
     private static final String user = "root";
-    private static final String password = "Gfhjkm00!2";
+    private static final String password = "sss";
 
     private static Connection con;
     private static Statement stmt;
