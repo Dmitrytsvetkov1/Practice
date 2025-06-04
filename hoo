@@ -1,0 +1,47 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class SQLServerExample {
+    public static void main(String[] args) {
+        // Параметры подключения
+        String serverName = "localhost"; // или IP-адрес
+        String instanceName = "SQLEXPRESS"; // если используете именованный экземпляр, иначе оставьте пустым
+        int port = 1433; // стандартный порт
+        String databaseName = "YourDatabase";
+        String user = "sa";
+        String password = "your_password";
+
+        // Строка подключения
+        String connectionUrl = "jdbc:sqlserver://" + serverName + 
+                                (instanceName != null && !instanceName.isEmpty() ? "\\" + instanceName : "") + 
+                                ":" + port + 
+                                ";databaseName=" + databaseName + 
+                                ";user=" + user + 
+                                ";password=" + password + 
+                                ";encrypt=true;trustServerCertificate=true"; // для разработки, в проде используйте правильные сертификаты
+
+        // Альтернативно, если экземпляр по умолчанию и без указания порта, можно просто jdbc:sqlserver://localhost;databaseName=YourDatabase;...
+
+        try (Connection connection = DriverManager.getConnection(connectionUrl);
+             Statement statement = connection.createStatement()) {
+
+            // Выполнение запроса
+            String sqlQuery = "SELECT * FROM YourTable";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+
+            // Обработка результатов
+            while (resultSet.next()) {
+                // Пример: если в таблице есть колонка "id" и "name"
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                System.out.println("ID: " + id + ", Name: " + name);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
